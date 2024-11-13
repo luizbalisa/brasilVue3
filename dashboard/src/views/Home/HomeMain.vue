@@ -6,42 +6,33 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { onMounted } from 'vue'
 import ContactHome from './ContactHome.vue'
 import HeaderHome from './HeaderHome.vue'
 import { useRouter } from 'vue-router'
 import useModal from '../../hooks/useModal.js'
-export default {
-  setup() {
-    const router = useRouter()
-    const modal = useModal()
-    onMounted(() => {
-      const token = window.localStorage.getItem('token');
 
-      if (token) {
-        router.push({name: "FeedbacksMain"})
-      }
-    })
+const router = useRouter()
+const modal = useModal()
 
-    function handleLogin() {
-      modal.open({
-        component: "ModalLogin"
-      })
-    }
+onMounted(() => {
+  const token = window.localStorage.getItem('token');
+  if (token) {
+    router.push({name: "FeedbacksMain"})
+  }
+})
 
-    function handleAccountCreate() {
-      modal.open({
-        component: "ModalCreateAccont"
-      })
-    }
+function handleLogin() {
+  modal.open({
+    component: "ModalLogin"
+  })
+}
 
-    return {
-      handleLogin,
-      handleAccountCreate
-    }
-  },
-  components: { ContactHome, HeaderHome }
+function handleAccountCreate() {
+  modal.open({
+    component: "ModalCreateAccont"
+  })
 }
 </script>
 
