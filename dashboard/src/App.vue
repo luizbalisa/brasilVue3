@@ -1,23 +1,12 @@
+<script setup>
+import { RouterView } from 'vue-router'
+import ModalFactory from './components/ModalFactory/modalFactory.vue';
+</script>
+
 <template>
   <main>
-    <ModalFactory />
-    <RouterView />
+    <modal-factory />
+    <router-view />
   </main>
 </template>
 
-<script>
-import { RouterLink, RouterView } from 'vue-router'
-// import HomeMain from './views/Home/HomeMain.vue'
-import ModalFactory from './components/ModalFactory/modalFactory.vue';
-
-export default {
-  components: {    ModalFactory},
-  setup() {
-    return {
-      RouterLink,
-      RouterView,
-      ModalFactory
-    }
-  },
-}
-</script>

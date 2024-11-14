@@ -1,9 +1,9 @@
 <template>
-  <header-home @create-account="handleAccountCreate" @login="handleLogin" />
-  <ContactHome />
-  <div class="footer flex justify-center py-10 bg-brand-gray">
-    <p class="font-medium text-center text-gray-800">feedback © 2023</p>
-  </div>
+    <header-home @create-account="handleAccountCreate" @login="handleLogin" />
+    <ContactHome />
+    <div class="footer flex justify-center py-10 bg-brand-gray">
+        <p class="font-medium text-center text-gray-800">feedback © 2023</p>
+    </div>
 </template>
 
 <script setup>
@@ -17,22 +17,22 @@ const router = useRouter()
 const modal = useModal()
 
 onMounted(() => {
-  const token = window.localStorage.getItem('token');
-  if (token) {
-    router.push({name: "FeedbacksMain"})
-  }
+    const token = window.localStorage.getItem('token')
+    if (token) {
+        router.push({ name: 'FeedbacksMain' })
+    }
 })
 
 function handleLogin() {
-  modal.open({
-    component: "ModalLogin"
-  })
+    modal.open({
+        component: 'ModalLogin'
+    })
 }
 
 function handleAccountCreate() {
-  modal.open({
-    component: "ModalCreateAccont"
-  })
+    modal.open({
+        component: 'ModalCreateAccount'
+    })
 }
 </script>
 
