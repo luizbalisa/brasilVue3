@@ -13,11 +13,9 @@
   </svg>
 </template>
 
-<script>
-export default {
-  props: {
+<script setup>
+  defineProps( {
     size: { type: [String, Number], default: 22 },
     color: { type: String, default: 'white' }
-  }
-}
+})
 </script>

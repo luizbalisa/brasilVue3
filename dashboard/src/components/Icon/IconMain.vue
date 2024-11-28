@@ -1,13 +1,12 @@
 <template>
-  <component :is="name" v-bind="$props"/>
+    <component :is="name" v-bind="$props" />
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue';
 import Loading from './LoadingMain.vue'
-export default {
-  components: { Loading },
-  props: {
+const props = defineProps({
     name: { type: String, required: true }
-  }
-}
+})
+
 </script>
