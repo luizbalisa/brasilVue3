@@ -1,12 +1,12 @@
 <script setup>
+import { useField } from 'vee-validate'
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { useField } from 'vee-validate'
 import { useToast } from 'vue-toastification'
 import useModal from '../../hooks/useModal'
-import Icon from '../Icon/IconMain.vue'
-import { validateEmptyAndLength3, validateEmptyAndEmail } from '../../utils/validators'
 import services from '../../services'
+import { validateEmptyAndEmail, validateEmptyAndLength3 } from '../../utils/validators'
+import Icon from '../Icon/IconMain.vue'
 
 const router = useRouter()
 const modal = useModal()
@@ -41,12 +41,15 @@ const state = reactive({
     }
 })
 
-const login = ({ email, password }) => {
-    const { data, errors } = services.auth.login({ email, password })
+const login = async () => {
+    const { data, errors } = await services.auth.login({
+        email: state.email.value,
+        password: state.password.value
+    })
+
     if (!errors) {
         window.localStorage.setItem('token', data.token)
         router.push({ name: 'FeedbacksMain' })
-        state.isLoading = false
         modal.close()
     }
 }
@@ -55,6 +58,7 @@ const handleSubmit = async () => {
     try {
         toast.clear()
         state.isLoading = true
+
         const {  errors } = await services.auth.register({ 
             name: state.name.value,
             email: state.email.value,
@@ -62,14 +66,16 @@ const handleSubmit = async () => {
         })
 
         if (!errors) {
-            await login({ email: state.email.value, password: state.password.value })
+            login()
             return
         }
 
         if (errors.status === 400) {
             toast.error('Ocorreu um erro ao cliar a conta')
         }
+
         state.isLoading = false
+
     } catch (error) {
         state.isLoading = false
         state.hasErrors = !!error
