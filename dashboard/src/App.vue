@@ -3,8 +3,10 @@ import { RouterView, useRoute, useRouter } from 'vue-router'
 import ModalFactory from './components/ModalFactory/modalFactory.vue'
 import { watch } from 'vue';
 import service from './services'
+import { setCurrentUser } from './store/user';
 const router = useRouter()
 const route = useRoute()
+const store = setCurrentUser('User')
 
 watch(route.path, async () => {
     if(route.meta.hasAuth) {
@@ -16,9 +18,8 @@ watch(route.path, async () => {
         }
 
         const { data } = await service.users.geMe()
-        console.log(data);
-        
     }
+        
 })
 </script>
 
