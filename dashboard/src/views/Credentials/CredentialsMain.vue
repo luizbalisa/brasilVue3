@@ -4,7 +4,7 @@ import { useToast } from 'vue-toastification'
 import HeaderLogged from '@/components/HeaderLogged/index.vue'
 import ContentLoader from '@/components/ContentLoader/index.vue'
 import Icon from '@/components/Icon/IconMain.vue'
-import useStore from '@/hooks/useStore'
+import useStore from '@/hooks/useStore.js'
 import palette from '../../../palette.js'
 import services from '@/services'
 import { setApiKey } from '@/store/user'
@@ -15,6 +15,45 @@ const state = reactive({
     hasError: false,
     isLoading: false
 })
+
+const brandColors = palette.brand
+
+const  handleGenerateApikey = async() => {
+    try {
+        state.isLoading = true
+        const { data } = await services.users.generateApikey()
+
+        setApiKey(data.apiKey)
+        state.isLoading = false
+    } catch (error) {
+        handleError(error)
+    }
+}
+
+watch( store.User.currentUser,
+    () => {
+        if (!store.Global.isLoading && !store.User.currentUser.apiKey) {
+            handleError(true)
+        }
+    }
+)
+
+const handleCopy= async() =>  {
+    toast.clear()
+
+    try {
+        await navigator.clipboard.writeText(store.User.currentUser.apiKey)
+        toast.success('Copiado!')
+    } catch (error) {
+        handleError(error)
+    }
+}
+
+const handleError = async(error) =>  {
+    state.isLoading = false
+    state.hasError = !!error
+}
+
 </script>
 <template>
     <div class="flex justify-center w-full h-28 bg-brand-main">
@@ -44,7 +83,9 @@ const state = reactive({
                 class="flex py-3 pl-5 mt-2 rounded justify-between items-center bg-brand-gray w-full lg:w-1/2"
             >
                 <span v-if="state.hasError">Erro ao carregar a apikey</span>
-                <span v-else id="apikey">{{ store.User.currentUser.apiKey }}</span>
+                <span v-else id="apikey">
+                    {{ store.User.currentUser.apiKey }}
+                </span>
                 <div class="flex ml-20 mr-5" v-if="!state.hasError">
                     <icon
                         @click="handleCopy"
@@ -82,7 +123,7 @@ const state = reactive({
                 <pre v-else>
                     &lt;script defer async onload="init('{{
                         store.User.currentUser.apiKey
-                    }}')" src="https://igorhalfeld-feedbacker-widget.netlify.app/init.js" &gt;&lt;/script&gt;
+                    }}')" src="https://luizbalisa-feedbacker-widget.netlify.app/init.js" &gt;&lt;/script&gt;
                 </pre>
             </div>
         </div>

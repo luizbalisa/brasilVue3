@@ -1,4 +1,4 @@
-<script>
+<script setup>
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
 import useStore from '../../hooks/useStore'
@@ -14,11 +14,12 @@ const logoutLabel = computed(() => {
     return `${store.currentUser.name} (sair)`
 })
 
-const  handleLogout = () => {
+const handleLogout = () => {
     window.localStorage.removeItem('token')
     cleanCurrentUser()
     router.push({ name: 'Home' })
 }
+
 </script>
 <template>
     <div class="flex items-center justify-between w-4/5 max-w-6xl py-10">
@@ -29,7 +30,7 @@ const  handleLogout = () => {
         <div class="flex">
             <ul class="flex list-none">
                 <li
-                    @click="() => router.push({ name: 'Credencials' })"
+                    @click="() => router.push({ name: 'Credentials' })"
                     class="px-6 py-2 mr-2 font-bold text-white rounded-full cursor-pointer focus:outline-none"
                 >
                     Credenciais
@@ -42,7 +43,7 @@ const  handleLogout = () => {
                 </li>
                 <li
                     id="logout-button"
-                    @click="handleLogout"
+                    @click="handleLogout()"
                     class="px-6 py-2 font-bold bg-white rounded-full cursor-pointer text-brand-main focus:outline-none"
                 >
                     {{ logoutLabel }}

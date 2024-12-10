@@ -19,7 +19,7 @@ const modal = useModal()
 onMounted(() => {
     const token = window.localStorage.getItem('token')
     if (token) {
-        router.push({ name: 'FeedbacksMain' })
+        router.push({ name: 'Feedbacks' })
     }
 })
 

@@ -14,7 +14,7 @@ const router = createRouter({
         },
         {
             path: '/feedbacks',
-            name: 'FeedbacksMain',
+            name: 'Feedbacks',
             component: FeedbacksMain,
             meta: {
                 hasAuth: true
