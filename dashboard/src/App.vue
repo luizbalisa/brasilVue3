@@ -2,25 +2,26 @@
 import { RouterView, useRoute, useRouter } from 'vue-router'
 import ModalFactory from './components/ModalFactory/modalFactory.vue'
 import { watch } from 'vue';
-import service from './services'
+import services from './services'
 import { setCurrentUser } from './store/user';
 const router = useRouter()
 const route = useRoute()
-const store = setCurrentUser('User')
 
-watch(route.path, async () => {
-    if(route.meta.hasAuth) {
+watch(() => route.path, async () => {
+      if (route.meta.hasAuth) {
         const token = window.localStorage.getItem('token')
-
-        if(!token) {
-            router.push({ name: 'HomeMain' })
-            return
+        if (!token) {
+          router.push({ name: 'Home' })
+          return
         }
 
-        const { data } = await service.users.geMe()
-    }
+        const { data } = await services.users.getMe()
+        console.log(data);
         
-})
+        setCurrentUser(data)
+      }
+    })
+  
 </script>
 
 <template>

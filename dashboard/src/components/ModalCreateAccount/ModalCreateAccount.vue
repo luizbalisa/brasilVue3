@@ -49,7 +49,7 @@ const login = async () => {
 
     if (!errors) {
         window.localStorage.setItem('token', data.token)
-        router.push({ name: 'FeedbacksMain' })
+        router.push({ name: 'Feedbacks' })
         modal.close()
     }
 }
@@ -59,7 +59,7 @@ const handleSubmit = async () => {
         toast.clear()
         state.isLoading = true
 
-        const {  errors } = await services.auth.register({ 
+        const { errors } = await services.auth.register({ 
             name: state.name.value,
             email: state.email.value,
             password: state.password.value

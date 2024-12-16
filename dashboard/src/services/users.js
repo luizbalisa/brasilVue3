@@ -1,20 +1,18 @@
 export default httpClient => ({
-
-  geMe: async () => {
-    const response = await httpClient.get()
-
-    let errors = null
-
-    if (!response.data) {
-      errors = {
-        status: response.request.status,
-        statusText: response.request.statusText
-      }
-    }
+  getMe: async () => {
+    const response = await httpClient.get('/users/me')
+    console.log(response);
     
+
     return {
-      data: response.data,
-      errors,
+      data: response.data
+    }
+  },
+  generateApikey: async () => {
+    const response = await httpClient.post('/users/me/apikey')
+
+    return {
+      data: response.data
     }
   }
 })

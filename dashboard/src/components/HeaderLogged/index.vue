@@ -8,6 +8,8 @@ const router = useRouter()
 const store = useStore('User')
 
 const logoutLabel = computed(() => {
+    console.log(store.currentUser.name);
+    
     if (!store.currentUser.name) {
         return '...'
     }

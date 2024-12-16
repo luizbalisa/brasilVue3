@@ -38,14 +38,15 @@ const handleSubmit = async() => {
     try {
         toast.clear()
         state.isLoading = true
+        
         const { data, errors } = await services.auth.login({
             email: state.email.value,
             password: state.password.value
         })
-
+        
         if (!errors) {
             window.localStorage.setItem('token', data.token)
-            router.push({ name: 'FeedbacksMain' })
+            router.push({ name: 'Feedbacks' })
             state.isLoading = false
             modal.close()
             return
@@ -66,6 +67,8 @@ const handleSubmit = async() => {
     } catch (error) {
         state.isLoading = false
         state.hasErrors = !!error
+        console.log(error);
+        
         toast.error('O correu um erro ao fazer o login')
     }
 }   
