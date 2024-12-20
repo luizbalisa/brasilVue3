@@ -18,6 +18,12 @@ const state = reactive({
 
 const brandColors = palette.brand
 
+/**
+ * Fun o que gera uma nova chave de api para o usu rio logado.
+ * @function handleGenerateApikey
+ * @async
+ * @returns {Promise<void>}
+ */
 const  handleGenerateApikey = async() => {
     try {
         state.isLoading = true
@@ -120,8 +126,7 @@ const handleError = async(error) =>  {
                 class="py-3 pl-5 pr-20 mt-2 rounded bg-brand-gray w-full lg:w-2/3 overflow-x-scroll"
             >
                 <span v-if="state.hasError">Erro ao carregar o script</span>
-                <pre v-else>
-                    &lt;script defer async onload="init('{{
+                <pre v-else>&lt;script defer async onload="init('{{
                         store.User.currentUser.apiKey
                     }}')" src="https://luizbalisa-feedbacker-widget.netlify.app/init.js" &gt;&lt;/script&gt;
                 </pre>
